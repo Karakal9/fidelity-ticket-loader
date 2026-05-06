@@ -109,62 +109,76 @@
             display: none;
             z-index: 1000;
         }
+
+        #pip-active-msg {
+            display: none;
+            text-align: center;
+            padding-top: 50px;
+            color: #666;
+        }
     </style>
 </head>
 <body>
-    <button id="float-btn" onclick="requestPiP()">📍 STICK TO TOP (FLOAT)</button>
+    <div id="main-content">
+        <button id="float-btn" onclick="requestPiP()">📍 STICK TO TOP (FLOAT)</button>
 
-    <!-- Order A -->
-    <div class="order-container">
-        <div class="order-header">Order A</div>
-        <div class="order-content">
-            <div class="field-group">
-                <div class="field"><div class="label">Action</div><div class="input-box"><span class="val">Buy</span></div></div>
-                <div class="field"><div class="label">Quantity</div><div class="input-box"><span class="val" id="val-q-a">0</span><button class="copy-btn" id="btn-q-a">📋</button></div></div>
-            </div>
-            <div class="field-group">
-                <div class="field"><div class="label">Order Type</div><div class="input-box"><span class="val" id="type-a">Market</span></div></div>
-                <div class="field"><div class="label">Time in Force</div><div class="input-box"><span class="val">Day</span></div></div>
-            </div>
-            <div id="entry-price-row" style="display:none;">
+        <!-- Order A -->
+        <div class="order-container">
+            <div class="order-header">Order A</div>
+            <div class="order-content">
                 <div class="field-group">
-                    <div class="field"><div class="label" id="price-label-a">Price</div><div class="input-box"><span class="val" id="val-p-a">0.00</span><button class="copy-btn" id="btn-p-a">📋</button></div></div>
-                    <div class="field" id="limit-col-a" style="display:none;"><div class="label">Limit Price</div><div class="input-box"><span class="val" id="val-lp-a">0.00</span><button class="copy-btn" id="btn-lp-a">📋</button></div></div>
+                    <div class="field"><div class="label">Action</div><div class="input-box"><span class="val">Buy</span></div></div>
+                    <div class="field"><div class="label">Quantity</div><div class="input-box"><span class="val" id="val-q-a">0</span><button class="copy-btn" id="btn-q-a">📋</button></div></div>
+                </div>
+                <div class="field-group">
+                    <div class="field"><div class="label">Order Type</div><div class="input-box"><span class="val" id="type-a">Market</span></div></div>
+                    <div class="field"><div class="label">Time in Force</div><div class="input-box"><span class="val">Day</span></div></div>
+                </div>
+                <div id="entry-price-row" style="display:none;">
+                    <div class="field-group">
+                        <div class="field"><div class="label" id="price-label-a">Price</div><div class="input-box"><span class="val" id="val-p-a">0.00</span><button class="copy-btn" id="btn-p-a">📋</button></div></div>
+                        <div class="field" id="limit-col-a" style="display:none;"><div class="label">Limit Price</div><div class="input-box"><span class="val" id="val-lp-a">0.00</span><button class="copy-btn" id="btn-lp-a">📋</button></div></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Order B -->
-    <div class="order-container">
-        <div class="order-header">Order B</div>
-        <div class="order-content">
-            <div class="field-group">
-                <div class="field"><div class="label">Action</div><div class="input-box"><span class="val">Sell</span></div></div>
-                <div class="field"><div class="label">Quantity</div><div class="input-box"><span class="val" id="val-q-b">0</span><button class="copy-btn" id="btn-q-b">📋</button></div></div>
+        <!-- Order B -->
+        <div class="order-container">
+            <div class="order-header">Order B</div>
+            <div class="order-content">
+                <div class="field-group">
+                    <div class="field"><div class="label">Action</div><div class="input-box"><span class="val">Sell</span></div></div>
+                    <div class="field"><div class="label">Quantity</div><div class="input-box"><span class="val" id="val-q-b">0</span><button class="copy-btn" id="btn-q-b">📋</button></div></div>
+                </div>
+                <div class="field-group">
+                    <div class="field"><div class="label">Order Type</div><div class="input-box"><span class="val">Limit</span></div></div>
+                    <div class="field"><div class="label">Limit Price</div><div class="input-box"><span class="val" id="val-p-b">0.00</span><button class="copy-btn" id="btn-p-b">📋</button></div></div>
+                </div>
+                <div class="field"><div class="label">Time in Force</div><div class="input-box"><span class="val">GTC</span></div></div>
             </div>
-            <div class="field-group">
-                <div class="field"><div class="label">Order Type</div><div class="input-box"><span class="val">Limit</span></div></div>
-                <div class="field"><div class="label">Limit Price</div><div class="input-box"><span class="val" id="val-p-b">0.00</span><button class="copy-btn" id="btn-p-b">📋</button></div></div>
+        </div>
+
+        <!-- Order C -->
+        <div class="order-container">
+            <div class="order-header">Order C</div>
+            <div class="order-content">
+                <div class="field-group">
+                    <div class="field"><div class="label">Action</div><div class="input-box"><span class="val">Sell</span></div></div>
+                    <div class="field"><div class="label">Quantity</div><div class="input-box"><span class="val" id="val-q-c">0</span><button class="copy-btn" id="btn-q-c">📋</button></div></div>
+                </div>
+                <div class="field-group">
+                    <div class="field"><div class="label">Order Type</div><div class="input-box"><span class="val">Stop Loss</span></div></div>
+                    <div class="field"><div class="label">Stop Price</div><div class="input-box"><span class="val" id="val-p-c">0.00</span><button class="copy-btn" id="btn-p-c">📋</button></div></div>
+                </div>
+                <div class="field"><div class="label">Time in Force</div><div class="input-box"><span class="val">GTC</span></div></div>
             </div>
-            <div class="field"><div class="label">Time in Force</div><div class="input-box"><span class="val">GTC</span></div></div>
         </div>
     </div>
 
-    <!-- Order C -->
-    <div class="order-container">
-        <div class="order-header">Order C</div>
-        <div class="order-content">
-            <div class="field-group">
-                <div class="field"><div class="label">Action</div><div class="input-box"><span class="val">Sell</span></div></div>
-                <div class="field"><div class="label">Quantity</div><div class="input-box"><span class="val" id="val-q-c">0</span><button class="copy-btn" id="btn-q-c">📋</button></div></div>
-            </div>
-            <div class="field-group">
-                <div class="field"><div class="label">Order Type</div><div class="input-box"><span class="val">Stop Loss</span></div></div>
-                <div class="field"><div class="label">Stop Price</div><div class="input-box"><span class="val" id="val-p-c">0.00</span><button class="copy-btn" id="btn-p-c">📋</button></div></div>
-            </div>
-            <div class="field"><div class="label">Time in Force</div><div class="input-box"><span class="val">GTC</span></div></div>
-        </div>
+    <div id="pip-active-msg">
+        <h3>📍 Ticket is Floating</h3>
+        <p style="margin-top:10px; font-size:12px;">The original window must stay open for the floating ticket to work.<br><br><b>You can safely minimize this window.</b></p>
     </div>
 
     <div class="toast" id="toast">Copied</div>
@@ -180,14 +194,12 @@
             const lp = params.get('limitPrice') || '0.00';
             const orderType = params.get('orderType');
 
-            // Data Mapping
             const data = {
                 'q-a': q, 'q-b': q, 'q-c': q,
                 'p-b': t, 'p-c': s,
                 'p-a': ep, 'lp-a': lp
             };
 
-            // Set Values and Setup Visibility
             Object.keys(data).forEach(id => {
                 const el = doc.getElementById('val-' + id);
                 if (el) el.innerText = data[id];
@@ -209,13 +221,11 @@
                 }
             }
 
-            // Bulletproof Copy Binder
             doc.querySelectorAll('.copy-btn').forEach(btn => {
                 const idSuffix = btn.id.replace('btn-', '');
                 const valueToCopy = data[idSuffix];
                 
                 btn.onclick = () => {
-                    // Try to use the document scope's navigator if available, otherwise fallback
                     const navigatorObj = doc.defaultView ? doc.defaultView.navigator : navigator;
                     navigatorObj.clipboard.writeText(valueToCopy).then(() => {
                         const toast = doc.getElementById('toast');
@@ -248,12 +258,26 @@
                 }
             });
 
-            const content = document.body.cloneNode(true);
+            const content = document.getElementById('main-content').cloneNode(true);
             content.querySelector('#float-btn').remove();
             pipWindow.document.body.appendChild(content);
 
-            // Re-populate using the PiP window's document context
+            // Re-populate the PiP window
             populate(pipWindow.document);
+
+            // Handle the main window cleanup
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('pip-active-msg').style.display = 'block';
+            
+            // Try to shrink the main window if possible
+            window.resizeTo(200, 200);
+
+            // If the PiP window is closed by the user, show the main content again
+            pipWindow.addEventListener("pagehide", (event) => {
+                document.getElementById('main-content').style.display = 'block';
+                document.getElementById('pip-active-msg').style.display = 'none';
+                window.resizeTo(360, 650);
+            });
         }
     </script>
 </body>
