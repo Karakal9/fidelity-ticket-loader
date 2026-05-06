@@ -2,10 +2,10 @@
   "name": "fidelity-autoticker",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "server": "node server.js",
-    "start": "node server.js",
+    "server": "node index.js",
+    "start": "node index.js",
     "frontend": "cd frontend && npm run dev",
     "dev": "concurrently \"npm run server\" \"npm run frontend\""
   },
