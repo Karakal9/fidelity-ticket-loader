@@ -178,7 +178,7 @@
 
     <div id="pip-active-msg">
         <h3>📍 Ticket is Floating</h3>
-        <p style="margin-top:10px; font-size:12px;">The original window must stay open for the floating ticket to work.<br><br><b>You can safely minimize this window.</b></p>
+        <p style="margin-top:10px; font-size:12px;">The original window must stay open for the floating ticket to work.<br><br><b>Closing the floating ticket will close this window automatically.</b></p>
     </div>
 
     <div class="toast" id="toast">Copied</div>
@@ -262,21 +262,14 @@
             content.querySelector('#float-btn').remove();
             pipWindow.document.body.appendChild(content);
 
-            // Re-populate the PiP window
             populate(pipWindow.document);
 
-            // Handle the main window cleanup
             document.getElementById('main-content').style.display = 'none';
             document.getElementById('pip-active-msg').style.display = 'block';
             
-            // Try to shrink the main window if possible
-            window.resizeTo(200, 200);
-
-            // If the PiP window is closed by the user, show the main content again
+            // AUTOMATIC CLEANUP: When floating ticket closes, kill the parent window too!
             pipWindow.addEventListener("pagehide", (event) => {
-                document.getElementById('main-content').style.display = 'block';
-                document.getElementById('pip-active-msg').style.display = 'none';
-                window.resizeTo(360, 650);
+                window.close();
             });
         }
     </script>
