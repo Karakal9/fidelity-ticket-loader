@@ -88,12 +88,19 @@ app.post('/api/parse', (req, res) => {
     }
 });
 
+const path = require('path');
+
 // Serve static files from the public directory
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Health check / Welcome
+app.get('/', (req, res) => {
+    res.send('Fidelity Speed Loader is LIVE! 🚀 Go to /ticket to see the UI.');
+});
 
 // New route to show the floating entry ticket
 app.get('/ticket', (req, res) => {
-    res.sendFile(__dirname + '/public/ticket.html');
+    res.sendFile(path.join(__dirname, 'public', 'ticket.html'));
 });
 
 const { spawn } = require('child_process');
