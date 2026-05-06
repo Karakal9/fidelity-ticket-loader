@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fidelity Speed Loader</title>
+    <style>
+        :root {
+            --fid-bg: #f5f5f5;
+            --fid-header: #eeeeee;
+            --fid-border: #cccccc;
+            --fid-text: #333333;
+            --fid-white: #ffffff;
+            --accent: #0078d4;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: Arial, sans-serif;
+            background: var(--fid-bg);
+            color: var(--fid-text);
+            padding: 10px;
+            width: 100%;
+            height: 100%;
+        }
+
+        #float-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px;
+            width: 100%;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .order-container {
+            border: 1px solid var(--fid-border);
+            margin-bottom: 15px;
+            background: var(--fid-header);
+        }
+
+        .order-header {
+            padding: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            border-bottom: 1px solid var(--fid-border);
+        }
+
+        .order-content {
+            padding: 10px;
+            background: var(--fid-white);
+        }
+
+        .field-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .field {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .label {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
+        .input-box {
+            border: 1px solid var(--fid-border);
+            padding: 6px;
+            font-size: 13px;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 32px;
+        }
+
+        .val { font-weight: bold; }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            color: var(--accent);
+            padding: 2px;
+        }
+
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: none;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <button id="float-btn" onclick="requestPiP()">📍 STICK TO TOP (FLOAT)</button>
+
+    <!-- Order A -->
+    <div class="order-container">
+        <div class="order-header">Order A</div>
+        <div class="order-content">
+            <div class="field-group">
+                <div class="field"><div class="label">Action</div><div class="input-box"><span class="val">Buy</span></div></div>
+                <div class="field"><div class="label">Quantity</div><div class="input-box"><span class="val" id="val-q-a">0</span><button class="copy-btn" id="btn-q-a">📋</button></div></div>
+            </div>
+            <div class="field-group">
+                <div class="field"><div class="label">Order Type</div><div class="input-box"><span class="val" id="type-a">Market</span></div></div>
+                <div class="field"><div class="label">Time in Force</div><div class="input-box"><span class="val">Day</span></div></div>
+            </div>
+            <div id="entry-price-row" style="display:none;">
+                <div class="field-group">
+                    <div class="field"><div class="label" id="price-label-a">Price</div><div class="input-box"><span class="val" id="val-p-a">0.00</span><button class="copy-btn" id="btn-p-a">📋</button></div></div>
+                    <div class="field" id="limit-col-a" style="display:none;"><div class="label">Limit Price</div><div class="input-box"><span class="val" id="val-lp-a">0.00</span><button class="copy-btn" id="btn-lp-a">📋</button></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order B -->
+    <div class="order-container">
+        <div class="order-header">Order B</div>
+        <div class="order-content">
+            <div class="field-group">
+                <div class="field"><div class="label">Action</div><div class="input-box"><span class="val">Sell</span></div></div>
+                <div class="field"><div class="label">Quantity</div><div class="input-box"><span class="val" id="val-q-b">0</span><button class="copy-btn" id="btn-q-b">📋</button></div></div>
+            </div>
+            <div class="field-group">
+                <div class="field"><div class="label">Order Type</div><div class="input-box"><span class="val">Limit</span></div></div>
+                <div class="field"><div class="label">Limit Price</div><div class="input-box"><span class="val" id="val-p-b">0.00</span><button class="copy-btn" id="btn-p-b">📋</button></div></div>
+            </div>
+            <div class="field"><div class="label">Time in Force</div><div class="input-box"><span class="val">GTC</span></div></div>
+        </div>
+    </div>
+
+    <!-- Order C -->
+    <div class="order-container">
+        <div class="order-header">Order C</div>
+        <div class="order-content">
+            <div class="field-group">
+                <div class="field"><div class="label">Action</div><div class="input-box"><span class="val">Sell</span></div></div>
+                <div class="field"><div class="label">Quantity</div><div class="input-box"><span class="val" id="val-q-c">0</span><button class="copy-btn" id="btn-q-c">📋</button></div></div>
+            </div>
+            <div class="field-group">
+                <div class="field"><div class="label">Order Type</div><div class="input-box"><span class="val">Stop Loss</span></div></div>
+                <div class="field"><div class="label">Stop Price</div><div class="input-box"><span class="val" id="val-p-c">0.00</span><button class="copy-btn" id="btn-p-c">📋</button></div></div>
+            </div>
+            <div class="field"><div class="label">Time in Force</div><div class="input-box"><span class="val">GTC</span></div></div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">Copied</div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        
+        function populate(doc) {
+            const q = params.get('quantity') || '0';
+            const t = params.get('target') || '0.00';
+            const s = params.get('stopLoss') || '0.00';
+            const ep = params.get('price') || '0.00';
+            const lp = params.get('limitPrice') || '0.00';
+            const orderType = params.get('orderType');
+
+            // Data Mapping
+            const data = {
+                'q-a': q, 'q-b': q, 'q-c': q,
+                'p-b': t, 'p-c': s,
+                'p-a': ep, 'lp-a': lp
+            };
+
+            // Set Values and Setup Visibility
+            Object.keys(data).forEach(id => {
+                const el = doc.getElementById('val-' + id);
+                if (el) el.innerText = data[id];
+            });
+
+            const typeA = doc.getElementById('type-a');
+            if (typeA) typeA.innerText = orderType;
+            
+            if (orderType !== 'Market') {
+                const row = doc.getElementById('entry-price-row');
+                if (row) row.style.display = 'block';
+                const labelA = doc.getElementById('price-label-a');
+                if (orderType === 'Stop Limit') {
+                    if (labelA) labelA.innerText = 'Stop Price';
+                    const colL = doc.getElementById('limit-col-a');
+                    if (colL) colL.style.display = 'block';
+                } else {
+                    if (labelA) labelA.innerText = 'Limit Price';
+                }
+            }
+
+            // Bulletproof Copy Binder
+            doc.querySelectorAll('.copy-btn').forEach(btn => {
+                const idSuffix = btn.id.replace('btn-', '');
+                const valueToCopy = data[idSuffix];
+                
+                btn.onclick = () => {
+                    // Try to use the document scope's navigator if available, otherwise fallback
+                    const navigatorObj = doc.defaultView ? doc.defaultView.navigator : navigator;
+                    navigatorObj.clipboard.writeText(valueToCopy).then(() => {
+                        const toast = doc.getElementById('toast');
+                        toast.style.display = 'block';
+                        setTimeout(() => toast.style.display = 'none', 1000);
+                    });
+                };
+            });
+        }
+        
+        populate(document);
+
+        async function requestPiP() {
+            const pipWindow = await window.documentPictureInPicture.requestWindow({
+                width: 340,
+                height: 600,
+            });
+
+            [...document.styleSheets].forEach((styleSheet) => {
+                try {
+                    const cssRules = [...styleSheet.cssRules].map((rule) => rule.cssText).join('');
+                    const style = document.createElement('style');
+                    style.textContent = cssRules;
+                    pipWindow.document.head.appendChild(style);
+                } catch (e) {
+                    const link = document.createElement('link');
+                    link.rel = 'stylesheet';
+                    link.href = styleSheet.href;
+                    pipWindow.document.head.appendChild(link);
+                }
+            });
+
+            const content = document.body.cloneNode(true);
+            content.querySelector('#float-btn').remove();
+            pipWindow.document.body.appendChild(content);
+
+            // Re-populate using the PiP window's document context
+            populate(pipWindow.document);
+        }
+    </script>
+</body>
+</html>
